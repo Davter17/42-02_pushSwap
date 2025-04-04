@@ -101,7 +101,6 @@ int	ft_atoi(const char *nptr)
 	return (result * sign);
 }
 
-
 // Converts the string `s` to a long.
 long	ft_atol(const char *s)
 {
@@ -110,7 +109,7 @@ long	ft_atol(const char *s)
 	int		i;
 
 	i = 0;
-	while(s[i] == ' ' || (s[i] >= 9 && s[i] <= 13))
+	while (s[i] == ' ' || (s[i] >= 9 && s[i] <= 13))
 		i++;
 	sign = 1;
 	if (s[i] == '+' || s[i] == '-')
@@ -120,7 +119,7 @@ long	ft_atol(const char *s)
 		i++;
 	}
 	result = 0;
-	while(s[i] >= '0' && s[i] <= '9')
+	while (s[i] >= '0' && s[i] <= '9')
 	{
 		result = result * 10 + (s[i] - '0');
 		i++;

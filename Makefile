@@ -1,50 +1,63 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: mpico-bu <mpico-bu@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/02/10 00:43:56 by mpico-bu          #+#    #+#              #
-#    Updated: 2025/02/11 18:38:12 by mpico-bu         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+# Standard
+NAME				= push_swap
 
-NAME = push_swap
+# Directories
+LIBFT				= ./libft/libft.a
+INC					= inc/
+SRC_DIR				= srcs/
+OBJ_DIR				= obj/
 
-SRCS = generate_slot.c slot_utils.c
-OBJS = $(SRCS:.c=.o)
+# Compiler and CFlags
+CC					= cc
+CFLAGS				= -Wall -Werror -Wextra -I
+RM					= rm -f
 
-CFLAGS = -Wall -Werror -Wextra
-CC = cc
+# Source Files
+COMMANDS_DIR		=	$(SRC_DIR)commands/alg_push.c \
+						$(SRC_DIR)commands/alg_reverse_rotate.c \
+						$(SRC_DIR)commands/alg_rotate.c \
+						$(SRC_DIR)commands/alg_swap.c \
+						$(SRC_DIR)commands/turk_algorithm.c \
+						$(SRC_DIR)commands/sort_three.c
 
-LIBFT_DIR = libft
-LIBFT = $(LIBFT_DIR)/libft.a
-INCLUDES = -Ilibft
+PUSH_SWAP_DIR		=	$(SRC_DIR)push_swap/check_errors.c \
+						$(SRC_DIR)push_swap/init_a_to_b.c \
+						$(SRC_DIR)push_swap/main.c \
+						$(SRC_DIR)push_swap/generate_slot.c \
+						$(SRC_DIR)push_swap/slot_utils.c
 
-.PHONY: all clean fclean re libft_clean libft_fclean
+# Concatenate all source files
+SRCS 				= $(COMMANDS_DIR) $(PUSH_SWAP_DIR)
 
-all: $(LIBFT) $(NAME)
+# Apply the pattern substitution to each source file in SRC and produce a corresponding list of object files in the OBJ_DIR
+OBJ 				= $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRCS))
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT) -o $(NAME)
+# Build rules
+start:				
+					@make all
 
 $(LIBFT):
-	$(MAKE) -C $(LIBFT_DIR)
+					@make -C ./libft
 
-clean: libft_clean
-	rm -f $(OBJS)
+all: 				$(NAME)
 
-fclean: clean libft_fclean
-	rm -f $(NAME)
+$(NAME): 			$(OBJ) $(LIBFT)
+					@$(CC) $(CFLAGS) $(INC) $(OBJ) $(LIBFT) -o $(NAME)
 
-re: fclean all
+# Compile object files from source files
+$(OBJ_DIR)%.o:		$(SRC_DIR)%.c 
+					@mkdir -p $(@D)
+					@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
-libft_clean:
-	$(MAKE) -C $(LIBFT_DIR) clean
+clean:
+					@$(RM) -r $(OBJ_DIR)
+					@make clean -C ./libft
 
-libft_fclean:
-	$(MAKE) -C $(LIBFT_DIR) fclean
+fclean: 			clean
+					@$(RM) $(NAME)
+					@$(RM) $(LIBFT)
 
-%.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+re: 				fclean all
+
+# Phony targets represent actions not files
+.PHONY: 			start all clean fclean re

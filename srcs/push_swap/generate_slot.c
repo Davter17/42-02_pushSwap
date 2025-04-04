@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../../inc/push_swap.h"
 
 static t_bilist	*bilst_new(t_bilist *prev, int value)
 {
@@ -25,41 +25,29 @@ static t_bilist	*bilst_new(t_bilist *prev, int value)
 	return (new_node);
 }
 
-static	void free_slots(t_bilist *slot_ini)
-{
-	t_bilist	*temp;
-
-	while (slot_ini)
-	{
-		temp = slot_ini;
-		slot_ini = slot_ini->next;
-		free(temp);
-	}
-}
-
 void	generate_slot(t_bilist **slot_ini, char **argv)
 {
 	int			i;
 	t_bilist	*slot_act;
 	t_bilist	*next_slot;
 
-	*slot_ini = bilst_new(NULL, ft_atoi(argv[1]));
+	*slot_ini = bilst_new(NULL, ft_atoi(argv[0]));
 	if (!slot_ini)
-    {
-        ft_printf("Error\nMemory allocation failed.\n");
-        exit(EXIT_FAILURE);
-    }
+	{
+		ft_printf("Error\nMemory allocation failed.\n");
+		exit(EXIT_FAILURE);
+	}
 	slot_act = *slot_ini;
-	i = 2;
+	i = 1;
 	while (argv[i])
 	{
-		next_slot = bilst_new(slot_act , ft_atoi(argv[i]));
+		next_slot = bilst_new(slot_act, ft_atoi(argv[i]));
 		if (!next_slot)
-        {
-            ft_printf("Error\nMemory allocation failed.\n");
-            free_slots(*slot_ini);
-            exit(EXIT_FAILURE);
-        }
+		{
+			ft_printf("Error\nMemory allocation failed.\n");
+			slot_free(slot_ini);
+			exit(EXIT_FAILURE);
+		}
 		slot_act->next = next_slot;
 		slot_act = next_slot;
 		i++;

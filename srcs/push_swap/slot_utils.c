@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../../inc/push_swap.h"
 
 int	slot_sorted(t_bilist *slot)
 {
@@ -28,7 +28,7 @@ int	slot_len(t_bilist *slot)
 	int	len;
 
 	len = 0;
-	while(slot)
+	while (slot)
 	{
 		slot = slot->next;
 		len++;
@@ -64,6 +64,13 @@ t_bilist	*slot_max(t_bilist *slot)
 	return (max_node);
 }
 
+t_bilist	*slot_first(t_bilist *slot)
+{
+	while (slot->prev)
+		slot = slot->prev;
+	return (slot);
+}
+
 t_bilist	*slot_last(t_bilist *slot)
 {
 	while (slot->next)
@@ -71,11 +78,60 @@ t_bilist	*slot_last(t_bilist *slot)
 	return (slot);
 }
 
-void	slot_print(t_bilist *slot)
+t_bilist	*slot_cheapest(t_bilist *slot)
 {
-	while(slot)
+	while (slot)
 	{
-		printf("%i" , slot->value);
+		if (slot->cheapest)
+			return (slot);
 		slot = slot->next;
 	}
+	return (NULL);
+}
+
+void	slot_print(t_bilist *slot)
+{
+	while (slot)
+	{
+		printf("%i ", slot->value);
+		slot = slot->next;
+	}
+	printf("\n");
+}
+
+void	prep_for_push(t_bilist **slot, t_bilist *top_node, char slot_name)
+{
+	while (*slot != top_node)
+	{
+		if (slot_name == 'a')
+		{
+			if (top_node->above_median)
+				ra(slot);
+			else
+				rra(slot);
+		}
+		else if (slot_name == 'b')
+		{
+			if (top_node->above_median)
+				rb(slot);
+			else
+				rrb(slot);
+		}
+	}
+}
+
+void	slot_free(t_bilist **slot)
+{
+	t_bilist	*temp;
+	t_bilist	*current;
+
+	current = *slot;
+	while (current)
+	{
+		temp = current->next;
+		current->value = 0;
+		free(current);
+		current = temp;
+	}
+	*slot = NULL;
 }
