@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/push_swap.h"
+#include "push_swap.h"
 
 static t_bilist	*bilst_new(t_bilist *prev, int value)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/push_swap.h"
+#include "push_swap.h"
 
 static void	move_a_to_b(t_bilist **a, t_bilist **b)
 {

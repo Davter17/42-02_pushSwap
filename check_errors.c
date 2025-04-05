@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/push_swap.h"
+#include "push_swap.h"
 
 static bool	check_syntax(char **argv)
 {

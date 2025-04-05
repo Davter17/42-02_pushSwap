@@ -15,8 +15,8 @@
 
 # include <stdbool.h>
 # include <limits.h>
-# include "../libft/libft.h"
-# include "../libft/ft_printf.h"
+# include "libft/libft.h"
+# include "libft/ft_printf.h"
 
 typedef struct s_bilist
 {
@@ -57,7 +57,7 @@ void		prep_for_push(t_bilist **s, t_bilist *n, char c);
 t_bilist	*solve_three(t_bilist *slot);
 t_bilist	*turk_algorithm(t_bilist **a, t_bilist **b);
 
-//***Stack utils
+//***Slot utils
 int			slot_sorted(t_bilist *slot);
 int			slot_len(t_bilist *slot);
 t_bilist	*slot_min(t_bilist *slot);

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/push_swap.h"
+#include "push_swap.h"
 
 void	update_indexs(t_bilist *slot_a, t_bilist *slot_b)
 {
