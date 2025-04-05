@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpico-bu <mpico-bu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: event <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/08 16:27:11 by mpico-bu          #+#    #+#             */
-/*   Updated: 2025/03/18 21:56:16 by mpico-bu         ###   ########.fr       */
+/*   Created: 2025/04/05 20:39:30 by event             #+#    #+#             */
+/*   Updated: 2025/04/05 20:39:34 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,25 +47,26 @@ void		pb(t_bilist **slot_a, t_bilist **slot_b);
 bool		check_errors(char **argv);
 void		generate_slot(t_bilist **slot_ini, char **argv);
 
+//***Slot utils
+int			slot_sorted(t_bilist *slot);
+int			slot_len(t_bilist *slot);
+t_bilist	*slot_first(t_bilist *slot);
+t_bilist	*slot_last(t_bilist *slot);
+void		slot_print(t_bilist *slot);
+t_bilist	*slot_min(t_bilist *slot);
+t_bilist	*slot_max(t_bilist *slot);
+t_bilist	*slot_cheapest(t_bilist *stack);
+void		slot_free(t_bilist **slot);
+
 //***Nodes initiation
 void		update_nodes(t_bilist *a, t_bilist *b, char node);
 void		update_indexs(t_bilist *slot_a, t_bilist *slot_b);
 void		set_cheapest(t_bilist *stack);
-void		prep_for_push(t_bilist **s, t_bilist *n, char c);
 
 //***Algorithm
 t_bilist	*solve_three(t_bilist *slot);
 t_bilist	*turk_algorithm(t_bilist **a, t_bilist **b);
 
-//***Slot utils
-int			slot_sorted(t_bilist *slot);
-int			slot_len(t_bilist *slot);
-t_bilist	*slot_min(t_bilist *slot);
-t_bilist	*slot_max(t_bilist *slot);
-t_bilist	*slot_first(t_bilist *slot);
-t_bilist	*slot_last(t_bilist *slot);
-t_bilist	*slot_cheapest(t_bilist *stack);
-void		slot_print(t_bilist *slot);
-void		slot_free(t_bilist **slot);
+
 
 #endif

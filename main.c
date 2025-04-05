@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpico-bu <mpico-bu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: event <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/20 22:38:58 by mpico-bu          #+#    #+#             */
-/*   Updated: 2025/03/17 19:07:39 by mpico-bu         ###   ########.fr       */
+/*   Created: 2025/04/05 20:38:30 by event             #+#    #+#             */
+/*   Updated: 2025/04/05 20:38:34 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	main(int argc, char **argv)
 	if (check_errors(argv))
 		exit(1);
 	generate_slot(&slot_a, argv);
-	slot_print(slot_a);
 	if (!slot_sorted(slot_a))
 	{
 		if (slot_len(slot_a) <= 3)

@@ -1,40 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   slot_utils.c                                      :+:      :+:    :+:   */
+/*   slot_utils_advance.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpico-bu <mpico-bu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: event <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/11 13:17:51 by mpico-bu          #+#    #+#             */
-/*   Updated: 2025/03/17 21:29:47 by mpico-bu         ###   ########.fr       */
+/*   Created: 2025/04/05 20:39:42 by event             #+#    #+#             */
+/*   Updated: 2025/04/05 20:39:46 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-int	slot_sorted(t_bilist *slot)
-{
-	while (slot->next)
-	{
-		if (slot->value > slot->next->value)
-			return (0);
-		slot = slot->next;
-	}
-	return (1);
-}
-
-int	slot_len(t_bilist *slot)
-{
-	int	len;
-
-	len = 0;
-	while (slot)
-	{
-		slot = slot->next;
-		len++;
-	}
-	return (len);
-}
 
 t_bilist	*slot_min(t_bilist *slot)
 {
@@ -64,20 +40,6 @@ t_bilist	*slot_max(t_bilist *slot)
 	return (max_node);
 }
 
-t_bilist	*slot_first(t_bilist *slot)
-{
-	while (slot->pre)
-		slot = slot->pre;
-	return (slot);
-}
-
-t_bilist	*slot_last(t_bilist *slot)
-{
-	while (slot->next)
-		slot = slot->next;
-	return (slot);
-}
-
 t_bilist	*slot_cheapest(t_bilist *slot)
 {
 	while (slot)
@@ -87,37 +49,6 @@ t_bilist	*slot_cheapest(t_bilist *slot)
 		slot = slot->next;
 	}
 	return (NULL);
-}
-
-void	slot_print(t_bilist *slot)
-{
-	while (slot)
-	{
-		printf("%i ", slot->value);
-		slot = slot->next;
-	}
-	printf("\n");
-}
-
-void	prep_for_push(t_bilist **slot, t_bilist *top_node, char slot_name)
-{
-	while (*slot != top_node)
-	{
-		if (slot_name == 'a')
-		{
-			if (top_node->ra)
-				ra(slot);
-			else
-				rra(slot);
-		}
-		else if (slot_name == 'b')
-		{
-			if (top_node->ra)
-				rb(slot);
-			else
-				rrb(slot);
-		}
-	}
 }
 
 void	slot_free(t_bilist **slot)

@@ -1,16 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rotates.c                                          :+:      :+:    :+:   */
+/*   turk_algorithm.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpico-bu <mpico-bu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: event <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/08 17:14:34 by mpico-bu          #+#    #+#             */
-/*   Updated: 2025/02/14 03:56:11 by mpico-bu         ###   ########.fr       */
+/*   Created: 2025/04/05 20:40:20 by event             #+#    #+#             */
+/*   Updated: 2025/04/05 20:40:24 by event            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+static void	prep_for_push(t_bilist **slot, t_bilist *top_node, char slot_name)
+{
+	while (*slot != top_node)
+	{
+		if (slot_name == 'a')
+		{
+			if (top_node->ra)
+				ra(slot);
+			else
+				rra(slot);
+		}
+		else if (slot_name == 'b')
+		{
+			if (top_node->ra)
+				rb(slot);
+			else
+				rrb(slot);
+		}
+	}
+}
 
 static void	move_a_to_b(t_bilist **a, t_bilist **b)
 {

@@ -3,18 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mpico-bu <mpico-bu@student.42.fr>          +#+  +:+       +#+         #
+#    By: event <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/01/20 15:51:55 by mpico-bu          #+#    #+#              #
-#    Updated: 2025/01/22 12:50:54 by mpico-bu         ###   ########.fr        #
+#    Created: 2025/04/05 20:39:17 by event             #+#    #+#              #
+#    Updated: 2025/04/05 20:39:21 by event            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = push_swap
 
 SRCS = alg_push.c alg_reverse_rotate.c alg_rotate.c alg_swap.c check_errors.c \
-       generate_slot.c main.c slot_utils.c sort_three.c turk_algorithm.c \
-       update_nodes.c
+       generate_slot.c main.c slot_utils_basic.c slot_utils_advance.c \
+	   sort_three.c turk_algorithm.c update_nodes.c
 OBJS = $(SRCS:.c=.o)
 
 CFLAGS = -Wall -Werror -Wextra
