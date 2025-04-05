@@ -12,87 +12,76 @@
 
 #include "push_swap.h"
 
-static void	prep_for_push(t_bilist **slot, t_bilist *top_node, char slot_name)
+static t_bilist	*solve_three(t_bilist *slot)
 {
-	while (*slot != top_node)
+	int	num_1;
+	int	num_2;
+	int	num_3;
+
+	num_1 = slot->value;
+	if (slot->next)
 	{
-		if (slot_name == 'a')
+		num_2 = slot->next->value;
+		if (slot->next->next)
 		{
-			if (top_node->ra)
-				ra(slot);
-			else
-				rra(slot);
+			num_3 = slot->next->next->value;
+			if (num_1 > num_2 && num_2 > num_3)
+				ra(&slot);
+			else if (num_1 > num_3 && num_3 > num_2)
+				ra(&slot);
+			else if (num_2 > num_1 && num_1 > num_3)
+				rra(&slot);
+			else if (num_2 > num_3 && num_3 > num_1)
+				rra(&slot);
 		}
-		else if (slot_name == 'b')
-		{
-			if (top_node->ra)
-				rb(slot);
-			else
-				rrb(slot);
-		}
+		if (slot->value > slot->next->value)
+			sa(&slot);
 	}
+	return (slot_first(slot));
 }
 
-static void	move_a_to_b(t_bilist **a, t_bilist **b)
+static void	fill_b(t_bilist **slot_a, t_bilist **slot_b)
 {
-	t_bilist	*cheapest_node;
+	t_bilist	*cheapest;
 
-	cheapest_node = slot_cheapest(*a);
-	if (cheapest_node->ra && cheapest_node->target->ra)
+	update_nodes(*slot_a, *slot_b, 'a');
+	cheapest = slot_cheapest(*slot_a);
+	if (cheapest->ra && cheapest->target->ra)
 	{
-		while (*b != cheapest_node->target && *a != cheapest_node)
-			rr(a, b);
+		while (*slot_a != cheapest && *slot_b != cheapest->target)
+			rr(slot_a, slot_b);
 	}
-	else if (!(cheapest_node->ra) && !(cheapest_node->target->ra))
+	else if (!(cheapest->ra) && !(cheapest->target->ra))
 	{
-		while (*b != cheapest_node->target && *a != cheapest_node)
-			rrr(a, b);
+		while (*slot_b != cheapest->target && *slot_a != cheapest)
+			rrr(slot_a, slot_b);
 	}
-	update_indexs(*a, *b);
-	prep_for_push(a, cheapest_node, 'a');
-	prep_for_push(b, cheapest_node->target, 'b');
-	pb(a, b);
+	update_indexs(*slot_a, *slot_b);
+	slot_to_top(slot_a, cheapest, 'a');
+	slot_to_top(slot_b, cheapest->target, 'b');
+	pb(slot_a, slot_b);
 }
 
-static void	move_b_to_a(t_bilist **a, t_bilist **b)
+static void	unfill_b(t_bilist **slot_a, t_bilist **slot_b)
 {
-	prep_for_push(a, (*b)->target, 'a');
-	pa(a, b);
-}
-
-static void	min_on_top(t_bilist **a)
-{
-	while ((*a)->value != slot_min(*a)->value)
-	{
-		if (slot_min(*a)->ra)
-			ra(a);
-		else
-			rra(a);
-	}
+	update_nodes(*slot_a, *slot_b, 'b');
+	slot_to_top(slot_a, (*slot_b)->target, 'a');
+	pa(slot_a, slot_b);
 }
 
 t_bilist	*turk_algorithm(t_bilist **slot_a, t_bilist **slot_b)
 {
 	int	len_a;
 
-	pb(slot_a, slot_b);
 	len_a = slot_len(*slot_a);
-	if (len_a > 3 && !slot_sorted(*slot_a))
+	if (len_a-- > 3)
 		pb(slot_a, slot_b);
-	len_a--;
-	while (len_a > 3 && !slot_sorted(*slot_a))
-	{
-		update_nodes(*slot_a, *slot_b, 'a');
-		move_a_to_b(slot_a, slot_b);
-		len_a--;
-	}
+	while (len_a-- > 3 && !slot_sorted(*slot_a))
+		fill_b(slot_a, slot_b);
 	*slot_a = solve_three(*slot_a);
 	while (*slot_b)
-	{
-		update_nodes(*slot_a, *slot_b, 'b');
-		move_b_to_a(slot_a, slot_b);
-	}
-	update_indexs(*slot_a, *slot_b);
-	min_on_top(slot_a);
+		unfill_b(slot_a, slot_b);
+	update_indexs(*slot_a, NULL);
+	slot_to_top(slot_a, slot_min(*slot_a), 'a');
 	return (*slot_a);
 }

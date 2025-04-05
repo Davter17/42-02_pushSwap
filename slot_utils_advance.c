@@ -66,3 +66,24 @@ void	slot_free(t_bilist **slot)
 	}
 	*slot = NULL;
 }
+
+void	slot_to_top(t_bilist **slot, t_bilist *node_to_top, char slot_name)
+{
+	while ((*slot)->value != node_to_top->value)
+	{
+		if (slot_name == 'a')
+		{
+			if (node_to_top->ra)
+				ra(slot);
+			else
+				rra(slot);
+		}
+		else
+		{
+			if (node_to_top->ra)
+				rb(slot);
+			else
+				rrb(slot);
+		}
+	}
+}

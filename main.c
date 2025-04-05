@@ -28,12 +28,7 @@ int	main(int argc, char **argv)
 		exit(1);
 	generate_slot(&slot_a, argv);
 	if (!slot_sorted(slot_a))
-	{
-		if (slot_len(slot_a) <= 3)
-			slot_a = solve_three(slot_a);
-		else
-			slot_a = turk_algorithm(&slot_a, &slot_b);
-	}
+		slot_a = turk_algorithm(&slot_a, &slot_b);
 	slot_print(slot_a);
 	slot_free(&slot_a);
 	return (0);

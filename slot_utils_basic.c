@@ -36,7 +36,6 @@ int	slot_len(t_bilist *slot)
 	return (len);
 }
 
-
 t_bilist	*slot_first(t_bilist *slot)
 {
 	while (slot->pre)

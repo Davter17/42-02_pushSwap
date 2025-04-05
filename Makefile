@@ -13,8 +13,8 @@
 NAME = push_swap
 
 SRCS = alg_push.c alg_reverse_rotate.c alg_rotate.c alg_swap.c check_errors.c \
-       generate_slot.c main.c slot_utils_basic.c slot_utils_advance.c \
-	   sort_three.c turk_algorithm.c update_nodes.c
+       generate_slot.c main.c slot_utils_advance.c slot_utils_basic.c \
+	   turk_algorithm.c update_nodes.c
 OBJS = $(SRCS:.c=.o)
 
 CFLAGS = -Wall -Werror -Wextra

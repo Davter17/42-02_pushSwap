@@ -43,11 +43,7 @@ void		rrr(t_bilist **slot_a, t_bilist **slot_b);
 void		pa(t_bilist **slot_a, t_bilist **slot_b);
 void		pb(t_bilist **slot_a, t_bilist **slot_b);
 
-//Initialization
-bool		check_errors(char **argv);
-void		generate_slot(t_bilist **slot_ini, char **argv);
-
-//***Slot utils
+//Slot utils
 int			slot_sorted(t_bilist *slot);
 int			slot_len(t_bilist *slot);
 t_bilist	*slot_first(t_bilist *slot);
@@ -56,17 +52,14 @@ void		slot_print(t_bilist *slot);
 t_bilist	*slot_min(t_bilist *slot);
 t_bilist	*slot_max(t_bilist *slot);
 t_bilist	*slot_cheapest(t_bilist *stack);
+void		slot_to_top(t_bilist **slot, t_bilist *node_to_top, char slot_name);
 void		slot_free(t_bilist **slot);
 
-//***Nodes initiation
-void		update_nodes(t_bilist *a, t_bilist *b, char node);
+//Program
+bool		check_errors(char **argv);
+void		generate_slot(t_bilist **slot_ini, char **argv);
 void		update_indexs(t_bilist *slot_a, t_bilist *slot_b);
-void		set_cheapest(t_bilist *stack);
-
-//***Algorithm
-t_bilist	*solve_three(t_bilist *slot);
+void		update_nodes(t_bilist *a, t_bilist *b, char node);
 t_bilist	*turk_algorithm(t_bilist **a, t_bilist **b);
-
-
 
 #endif
