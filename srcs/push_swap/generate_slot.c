@@ -19,7 +19,7 @@ static t_bilist	*bilst_new(t_bilist *prev, int value)
 	new_node = malloc(sizeof(t_bilist));
 	if (!new_node)
 		return (NULL);
-	new_node->prev = prev;
+	new_node->pre = prev;
 	new_node->value = value;
 	new_node->next = NULL;
 	return (new_node);

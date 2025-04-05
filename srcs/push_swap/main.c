@@ -12,37 +12,6 @@
 
 #include "push_swap.h"
 
-/*
-int	main(int argc, char **argv)
-{
-	t_bilist		*slot_a;
-	t_bilist		*slot_b;
-	bool			splitted;
-
-	slot_b = NULL;
-	splitted = false;
-	if (argc == 1)
-		return (1);
-	if (argc == 2)
-	{
-		argv = ft_split(argv[1], ' ');
-		splitted = true;
-	}
-	if (splitted)
-		generate_slot(&slot_a, argv);
-	else
-		generate_slot(&slot_a, argv + 1);
-	if (slot_sorted(slot_a))
-		return (free(&slot_a), 0);
-	if (slot_len(slot_a) <= 3)
-		sort_three(&slot_a);
-	else
-		sort_slots(&slot_a, &slot_b);
-	free(&slot_a);
-	return (0);
-}
-*/
-
 int	main(int argc, char **argv)
 {
 	t_bilist		*slot_a;

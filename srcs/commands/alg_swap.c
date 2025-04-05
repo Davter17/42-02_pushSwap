@@ -19,11 +19,11 @@ static void	swap(t_bilist **slot)
 
 	first_node = *slot;
 	second_node = first_node->next;
-	first_node->prev = second_node;
+	first_node->pre = second_node;
 	first_node->next = second_node->next;
 	if (first_node->next)
-		first_node->next->prev = first_node;
-	second_node->prev = NULL;
+		first_node->next->pre = first_node;
+	second_node->pre = NULL;
 	second_node->next = first_node;
 	*slot = second_node;
 }

@@ -21,7 +21,7 @@ COMMANDS_DIR		=	$(SRC_DIR)commands/alg_push.c \
 						$(SRC_DIR)commands/sort_three.c
 
 PUSH_SWAP_DIR		=	$(SRC_DIR)push_swap/check_errors.c \
-						$(SRC_DIR)push_swap/init_a_to_b.c \
+						$(SRC_DIR)push_swap/update_nodes.c \
 						$(SRC_DIR)push_swap/main.c \
 						$(SRC_DIR)push_swap/generate_slot.c \
 						$(SRC_DIR)push_swap/slot_utils.c

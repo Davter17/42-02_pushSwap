@@ -20,9 +20,9 @@ static void	rotate(t_bilist **slot)
 	first_node = *slot;
 	last_node = slot_last(first_node);
 	*slot = first_node->next;
-	first_node->next->prev = NULL;
+	first_node->next->pre = NULL;
 	last_node->next = first_node;
-	first_node->prev = last_node;
+	first_node->pre = last_node;
 	first_node->next = NULL;
 }
 

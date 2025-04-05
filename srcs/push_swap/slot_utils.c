@@ -66,8 +66,8 @@ t_bilist	*slot_max(t_bilist *slot)
 
 t_bilist	*slot_first(t_bilist *slot)
 {
-	while (slot->prev)
-		slot = slot->prev;
+	while (slot->pre)
+		slot = slot->pre;
 	return (slot);
 }
 
@@ -105,14 +105,14 @@ void	prep_for_push(t_bilist **slot, t_bilist *top_node, char slot_name)
 	{
 		if (slot_name == 'a')
 		{
-			if (top_node->above_median)
+			if (top_node->ra)
 				ra(slot);
 			else
 				rra(slot);
 		}
 		else if (slot_name == 'b')
 		{
-			if (top_node->above_median)
+			if (top_node->ra)
 				rb(slot);
 			else
 				rrb(slot);

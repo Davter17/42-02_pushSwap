@@ -21,13 +21,13 @@
 typedef struct s_bilist
 {
 	int				value;
-	int				index;
-	int				push_cost;
-	bool			above_median;
-	bool			cheapest;
-	struct s_bilist	*target_node;
+	struct s_bilist	*pre;
 	struct s_bilist	*next;
-	struct s_bilist	*prev;
+	int				index;
+	bool			ra;
+	struct s_bilist	*target;
+	int				cost;
+	bool			cheapest;
 }	t_bilist;
 
 //Algorithms
@@ -48,8 +48,7 @@ bool		check_errors(char **argv);
 void		generate_slot(t_bilist **slot_ini, char **argv);
 
 //***Nodes initiation
-void		init_nodes_a(t_bilist *a, t_bilist *b);
-void		init_nodes_b(t_bilist *a, t_bilist *b);
+void		update_nodes(t_bilist *a, t_bilist *b, char node);
 void		update_indexs(t_bilist *slot_a, t_bilist *slot_b);
 void		set_cheapest(t_bilist *stack);
 void		prep_for_push(t_bilist **s, t_bilist *n, char c);

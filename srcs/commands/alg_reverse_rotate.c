@@ -19,10 +19,10 @@ static void	reverse_rotate(t_bilist **slot)
 
 	first_node = *slot;
 	last_node = slot_last(first_node);
-	last_node->prev->next = NULL;
-	last_node->prev = NULL;
+	last_node->pre->next = NULL;
+	last_node->pre = NULL;
 	last_node->next = first_node;
-	first_node->prev = last_node;
+	first_node->pre = last_node;
 	*slot = last_node;
 }
 
