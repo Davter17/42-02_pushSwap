@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mpico-bu <mpico-bu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 20:39:30 by event             #+#    #+#             */
-/*   Updated: 2025/04/05 20:39:34 by event            ###   ########.fr       */
+/*   Updated: 2025/04/06 23:50:27 by mpico-bu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,14 @@ int			slot_sorted(t_bilist *slot);
 int			slot_len(t_bilist *slot);
 t_bilist	*slot_first(t_bilist *slot);
 t_bilist	*slot_last(t_bilist *slot);
-void		slot_print(t_bilist *slot);
+t_bilist	*slot_cheapest(t_bilist *slot);
+//void		slot_print(t_bilist *slot);
+
 t_bilist	*slot_min(t_bilist *slot);
 t_bilist	*slot_max(t_bilist *slot);
-t_bilist	*slot_cheapest(t_bilist *stack);
-void		slot_to_top(t_bilist **slot, t_bilist *node_to_top, char slot_name);
 void		slot_free(t_bilist **slot);
+void		slot_to_top(t_bilist **slot, t_bilist *node_to_top, char slot_name);
+t_bilist	*slot_target(t_bilist *slot_out, t_bilist *slot_in, bool a_b);
 
 //Program
 bool		check_errors(char **argv);

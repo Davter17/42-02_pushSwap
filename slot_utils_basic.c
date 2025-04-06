@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   slot_utils_basic.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mpico-bu <mpico-bu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 20:39:54 by event             #+#    #+#             */
-/*   Updated: 2025/04/05 20:39:57 by event            ###   ########.fr       */
+/*   Updated: 2025/04/06 23:50:17 by mpico-bu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,18 @@ t_bilist	*slot_last(t_bilist *slot)
 	return (slot);
 }
 
+t_bilist	*slot_cheapest(t_bilist *slot)
+{
+	while (slot)
+	{
+		if (slot->cheapest)
+			return (slot);
+		slot = slot->next;
+	}
+	return (NULL);
+}
+
+/*
 void	slot_print(t_bilist *slot)
 {
 	while (slot)
@@ -59,3 +71,4 @@ void	slot_print(t_bilist *slot)
 	}
 	printf("\n");
 }
+*/

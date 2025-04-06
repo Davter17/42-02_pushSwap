@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   slot_utils_advance.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mpico-bu <mpico-bu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 20:39:42 by event             #+#    #+#             */
-/*   Updated: 2025/04/05 20:39:46 by event            ###   ########.fr       */
+/*   Updated: 2025/04/06 23:50:06 by mpico-bu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,6 @@ t_bilist	*slot_max(t_bilist *slot)
 		slot = slot->next;
 	}
 	return (max_node);
-}
-
-t_bilist	*slot_cheapest(t_bilist *slot)
-{
-	while (slot)
-	{
-		if (slot->cheapest)
-			return (slot);
-		slot = slot->next;
-	}
-	return (NULL);
 }
 
 void	slot_free(t_bilist **slot)
@@ -86,4 +75,33 @@ void	slot_to_top(t_bilist **slot, t_bilist *node_to_top, char slot_name)
 				rrb(slot);
 		}
 	}
+}
+
+t_bilist	*slot_target(t_bilist *slot_out, t_bilist *slot_in, bool a_b)
+{
+	t_bilist	*best_node;
+	long		best_match;
+
+	best_node = NULL;
+	if (a_b)
+		best_match = LONG_MIN;
+	else
+		best_match = LONG_MAX;
+	while (slot_in)
+	{
+		if (a_b && slot_in->value < slot_out->value
+			&& slot_in->value > best_match)
+		{
+			best_match = slot_in->value;
+			best_node = slot_in;
+		}
+		if (!a_b && slot_in->value > slot_out->value
+			&& slot_in->value < best_match)
+		{
+			best_match = slot_in->value;
+			best_node = slot_in;
+		}
+		slot_in = slot_in->next;
+	}
+	return (best_node);
 }

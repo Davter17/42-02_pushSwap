@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update_nodes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mpico-bu <mpico-bu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 20:40:32 by event             #+#    #+#             */
-/*   Updated: 2025/04/05 20:40:35 by event            ###   ########.fr       */
+/*   Updated: 2025/04/06 23:42:55 by mpico-bu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,36 +39,13 @@ void	update_indexs(t_bilist *slot_a, t_bilist *slot_b)
 	}
 }
 
-static t_bilist	*find_best_match(t_bilist *slot_out, t_bilist *slot_in, bool a_b)
-{
-	t_bilist	*best_node;
-	long		best_match;
-
-	best_node = NULL;
-	if (a_b)
-		best_match = LONG_MIN;
-	else
-		best_match = LONG_MAX;
-	while (slot_in)
-	{
-		if ((a_b && slot_in->value < slot_out->value && slot_in->value > best_match) ||
-			(!a_b && slot_in->value > slot_out->value && slot_in->value < best_match))
-		{
-			best_match = slot_in->value;
-			best_node = slot_in;
-		}
-		slot_in = slot_in->next;
-	}
-	return (best_node);
-}
-
 static void	update_targets(t_bilist *slot_out, t_bilist *slot_in, bool a_b)
 {
 	t_bilist	*match;
 
 	while (slot_out)
 	{
-		match = find_best_match(slot_out, slot_in, a_b);
+		match = slot_target(slot_out, slot_in, a_b);
 		if (match)
 			slot_out->target = match;
 		else

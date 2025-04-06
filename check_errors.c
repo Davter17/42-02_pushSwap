@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_errors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mpico-bu <mpico-bu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 20:38:05 by event             #+#    #+#             */
-/*   Updated: 2025/04/05 20:38:09 by event            ###   ########.fr       */
+/*   Updated: 2025/04/06 23:49:33 by mpico-bu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ static bool	check_syntax(char **argv)
 	i = 0;
 	while (argv[i])
 	{
-		if ((argv[i][0] != '+' && argv[i][0] != '-' && (argv[i][0] < '0' || argv[i][0] > '9')))
+		if ((argv[i][0] != '+' && argv[i][0] != '-'
+			&& (argv[i][0] < '0' || argv[i][0] > '9')))
 		{
 			ft_printf("Error: Syntax error on %s.\n", argv[i]);
 			return (1);

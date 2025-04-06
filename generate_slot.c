@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   generate_slot.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mpico-bu <mpico-bu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 20:38:19 by event             #+#    #+#             */
-/*   Updated: 2025/04/05 20:38:22 by event            ###   ########.fr       */
+/*   Updated: 2025/04/06 23:39:49 by mpico-bu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	generate_slot(t_bilist **slot_ini, char **argv)
 	if (!slot_ini)
 	{
 		ft_printf("Error\nMemory allocation failed.\n");
-		exit(EXIT_FAILURE);
+		exit(1);
 	}
 	slot_act = *slot_ini;
 	i = 1;
@@ -46,7 +46,7 @@ void	generate_slot(t_bilist **slot_ini, char **argv)
 		{
 			ft_printf("Error\nMemory allocation failed.\n");
 			slot_free(slot_ini);
-			exit(EXIT_FAILURE);
+			exit(1);
 		}
 		slot_act->next = next_slot;
 		slot_act = next_slot;

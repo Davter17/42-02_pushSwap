@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: event <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mpico-bu <mpico-bu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 20:38:30 by event             #+#    #+#             */
-/*   Updated: 2025/04/05 20:38:34 by event            ###   ########.fr       */
+/*   Updated: 2025/04/06 23:50:36 by mpico-bu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	main(int argc, char **argv)
 	generate_slot(&slot_a, argv);
 	if (!slot_sorted(slot_a))
 		slot_a = turk_algorithm(&slot_a, &slot_b);
-	slot_print(slot_a);
 	slot_free(&slot_a);
 	return (0);
 }
