@@ -14,24 +14,24 @@
 
 static t_bilist	*solve_three(t_bilist *slot)
 {
-	int	num_1;
-	int	num_2;
-	int	num_3;
+	int	n1;
+	int	n2;
+	int	n3;
 
-	num_1 = slot->value;
+	n1 = slot->value;
 	if (slot->next)
 	{
-		num_2 = slot->next->value;
+		n2 = slot->next->value;
 		if (slot->next->next)
 		{
-			num_3 = slot->next->next->value;
-			if (num_1 > num_2 && num_2 > num_3)
+			n3 = slot->next->next->value;
+			if (n1 > n2 && n2 > n3)
 				ra(&slot);
-			else if (num_1 > num_3 && num_3 > num_2)
+			else if (n1 > n3 && n3 > n2)
 				ra(&slot);
-			else if (num_2 > num_1 && num_1 > num_3)
+			else if (n2 > n1 && n1 > n3)
 				rra(&slot);
-			else if (num_2 > num_3 && num_3 > num_1)
+			else if (n2 > n3 && n3 > n1)
 				rra(&slot);
 		}
 		if (slot->value > slot->next->value)
@@ -40,22 +40,27 @@ static t_bilist	*solve_three(t_bilist *slot)
 	return (slot_first(slot));
 }
 
+static void	move_to_top(t_bilist **a, t_bilist **b, t_bilist *cheap)
+{
+	if (cheap->ra && cheap->target->ra)
+	{
+		while (*a != cheap && *b != cheap->target)
+			rr(a, b);
+	}
+	else if (!cheap->ra && !cheap->target->ra)
+	{
+		while (*a != cheap && *b != cheap->target)
+			rrr(a, b);
+	}
+}
+
 static void	fill_b(t_bilist **slot_a, t_bilist **slot_b)
 {
 	t_bilist	*cheapest;
 
 	update_nodes(*slot_a, *slot_b, 'a');
 	cheapest = slot_cheapest(*slot_a);
-	if (cheapest->ra && cheapest->target->ra)
-	{
-		while (*slot_a != cheapest && *slot_b != cheapest->target)
-			rr(slot_a, slot_b);
-	}
-	else if (!cheapest->ra && !cheapest->target->ra)
-	{
-		while (*slot_a != cheapest && *slot_b != cheapest->target)
-			rrr(slot_a, slot_b);
-	}
+	move_to_top(slot_a, slot_b, cheapest);
 	slot_to_top(slot_a, cheapest, 'a');
 	slot_to_top(slot_b, cheapest->target, 'b');
 	pb(slot_a, slot_b);

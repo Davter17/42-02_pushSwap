@@ -6,7 +6,7 @@
 /*   By: mpico-bu <mpico-bu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 20:38:05 by event             #+#    #+#             */
-/*   Updated: 2025/04/06 23:49:33 by mpico-bu          ###   ########.fr       */
+/*   Updated: 2025/04/06 23:49:33 by mpico-bu          ###   ########.fr      */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ static bool	check_syntax(char **argv)
 	i = 0;
 	while (argv[i])
 	{
-		if ((argv[i][0] != '+' && argv[i][0] != '-'
-			&& (argv[i][0] < '0' || argv[i][0] > '9')))
+		if (argv[i][0] != '+' && argv[i][0] != '-'
+			&& (argv[i][0] < '0' || argv[i][0] > '9'))
 		{
 			print_error();
 			return (1);
@@ -48,8 +48,8 @@ static bool	check_syntax(char **argv)
 
 static bool	check_limits(char **argv)
 {
-	int		i;
-	int		error;
+	int			i;
+	int			error;
 	long long	atol_val;
 
 	i = 0;
@@ -69,17 +69,17 @@ static bool	check_limits(char **argv)
 
 static bool	check_duplicates(char **argv)
 {
-	int		i;
-	int		j;
-	int		error;
+	int			i;
+	int			j;
+	int			error;
 	long long	number;
 
 	i = 0;
 	while (argv[i])
 	{
-		j = i + 1;
 		error = 0;
 		number = ft_atol(argv[i], &error);
+		j = i + 1;
 		while (argv[j])
 		{
 			error = 0;

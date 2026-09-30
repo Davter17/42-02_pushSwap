@@ -56,46 +56,31 @@ void	slot_free(t_bilist **slot)
 	*slot = NULL;
 }
 
-static int	get_position(t_bilist *slot, t_bilist *node)
-{
-	int	pos;
-
-	pos = 0;
-	while (slot && slot != node)
-	{
-		slot = slot->next;
-		pos++;
-	}
-	return (pos);
-}
-
 void	slot_to_top(t_bilist **slot, t_bilist *node_to_top, char slot_name)
 {
-	int	pos;
-	int	len;
+	int			pos;
+	int			len;
+	t_bilist	*tmp;
+	void		(*rotate)(t_bilist **);
 
 	len = slot_len(*slot);
-	pos = get_position(*slot, node_to_top);
-	if (pos <= len / 2)
+	pos = 0;
+	tmp = *slot;
+	while (tmp && tmp != node_to_top)
 	{
-		while (*slot != node_to_top)
-		{
-			if (slot_name == 'a')
-				ra(slot);
-			else
-				rb(slot);
-		}
+		tmp = tmp->next;
+		pos++;
 	}
+	if (pos <= len / 2 && slot_name == 'a')
+		rotate = ra;
+	else if (pos <= len / 2)
+		rotate = rb;
+	else if (slot_name == 'a')
+		rotate = rra;
 	else
-	{
-		while (*slot != node_to_top)
-		{
-			if (slot_name == 'a')
-				rra(slot);
-			else
-				rrb(slot);
-		}
-	}
+		rotate = rrb;
+	while (*slot != node_to_top)
+		rotate(slot);
 }
 
 t_bilist	*slot_target(t_bilist *slot_out, t_bilist *slot_in, bool a_b)
@@ -116,7 +101,7 @@ t_bilist	*slot_target(t_bilist *slot_out, t_bilist *slot_in, bool a_b)
 			best_match = slot_in->value;
 			best_node = slot_in;
 		}
-		if (!a_b && slot_in->value > slot_out->value
+		else if (!a_b && slot_in->value > slot_out->value
 			&& slot_in->value < best_match)
 		{
 			best_match = slot_in->value;

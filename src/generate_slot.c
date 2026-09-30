@@ -25,11 +25,26 @@ static t_bilist	*bilst_new(t_bilist *prev, int value)
 	return (new_node);
 }
 
+static void	add_node(t_bilist **slot_ini, t_bilist **slot_act,
+		char **argv, int i)
+{
+	t_bilist	*next_slot;
+
+	next_slot = bilst_new(*slot_act, ft_atoi(argv[i]));
+	if (!next_slot)
+	{
+		ft_printf("Error\nMemory allocation failed.\n");
+		slot_free(slot_ini);
+		exit(1);
+	}
+	(*slot_act)->next = next_slot;
+	*slot_act = next_slot;
+}
+
 void	generate_slot(t_bilist **slot_ini, char **argv)
 {
 	int			i;
 	t_bilist	*slot_act;
-	t_bilist	*next_slot;
 
 	*slot_ini = bilst_new(NULL, ft_atoi(argv[0]));
 	if (!*slot_ini)
@@ -41,15 +56,7 @@ void	generate_slot(t_bilist **slot_ini, char **argv)
 	i = 1;
 	while (argv[i])
 	{
-		next_slot = bilst_new(slot_act, ft_atoi(argv[i]));
-		if (!next_slot)
-		{
-			ft_printf("Error\nMemory allocation failed.\n");
-			slot_free(slot_ini);
-			exit(1);
-		}
-		slot_act->next = next_slot;
-		slot_act = next_slot;
+		add_node(slot_ini, &slot_act, argv, i);
 		i++;
 	}
 }

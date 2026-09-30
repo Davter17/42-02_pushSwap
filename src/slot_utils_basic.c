@@ -60,15 +60,3 @@ t_bilist	*slot_cheapest(t_bilist *slot)
 	}
 	return (NULL);
 }
-
-/*
-void	slot_print(t_bilist *slot)
-{
-	while (slot)
-	{
-		printf("%i ", slot->value);
-		slot = slot->next;
-	}
-	printf("\n");
-}
-*/

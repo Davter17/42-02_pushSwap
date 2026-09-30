@@ -14,28 +14,27 @@
 
 void	update_indexs(t_bilist *slot_a, t_bilist *slot_b)
 {
-	int			i;
-	int			j;
-	int			median;
-	t_bilist	*slots[2];
-	t_bilist	*current;
+	int	median_a;
+	int	median_b;
+	int	j;
 
-	slots[0] = slot_a;
-	slots[1] = slot_b;
-	i = 0;
-	while (i < 2)
+	median_a = slot_len(slot_a) / 2;
+	j = 0;
+	while (slot_a)
 	{
-		median = slot_len(slots[i]) / 2;
-		current = slots[i];
-		j = 0;
-		while (current)
-		{
-			current->index = j;
-			current->ra = (j <= median);
-			current = current->next;
-			j++;
-		}
-		i++;
+		slot_a->index = j;
+		slot_a->ra = (j <= median_a);
+		slot_a = slot_a->next;
+		j++;
+	}
+	median_b = slot_len(slot_b) / 2;
+	j = 0;
+	while (slot_b)
+	{
+		slot_b->index = j;
+		slot_b->ra = (j <= median_b);
+		slot_b = slot_b->next;
+		j++;
 	}
 }
 
@@ -59,6 +58,13 @@ static void	update_targets(t_bilist *slot_out, t_bilist *slot_in, bool a_b)
 	}
 }
 
+static int	calc_cost(int idx, int is_ra, int len)
+{
+	if (is_ra)
+		return (idx);
+	return (len - idx);
+}
+
 static void	update_cost(t_bilist *slot_a, t_bilist *slot_b)
 {
 	int	len_a;
@@ -70,50 +76,43 @@ static void	update_cost(t_bilist *slot_a, t_bilist *slot_b)
 	len_b = slot_len(slot_b);
 	while (slot_a)
 	{
-		cost_a = slot_a->index;
-		if (!(slot_a->ra))
-			cost_a = len_a - slot_a->index;
-		cost_b = slot_a->target->index;
-		if (!(slot_a->target->ra))
-			cost_b = len_b - slot_a->target->index;
+		cost_a = calc_cost(slot_a->index, slot_a->ra, len_a);
+		cost_b = calc_cost(slot_a->target->index,
+				slot_a->target->ra, len_b);
 		if (slot_a->ra == slot_a->target->ra)
-			slot_a->cost = (cost_a > cost_b) ? cost_a : cost_b;
+		{
+			if (cost_a > cost_b)
+				slot_a->cost = cost_a;
+			else
+				slot_a->cost = cost_b;
+		}
 		else
 			slot_a->cost = cost_a + cost_b;
 		slot_a = slot_a->next;
 	}
 }
 
-static void	update_cheapest(t_bilist *slot)
+void	update_nodes(t_bilist *a, t_bilist *b, char slot)
 {
-	t_bilist	*cheapest_node;
+	t_bilist	*cheapest;
 	t_bilist	*temp;
 
-	temp = slot;
+	update_indexs(a, b);
+	if (slot == 'b')
+	{
+		update_targets(b, a, 0);
+		return ;
+	}
+	update_targets(a, b, 1);
+	update_cost(a, b);
+	temp = a;
+	cheapest = a;
 	while (temp)
 	{
 		temp->cheapest = false;
+		if (temp->cost < cheapest->cost)
+			cheapest = temp;
 		temp = temp->next;
 	}
-	cheapest_node = slot;
-	while (slot)
-	{
-		if (slot->cost < cheapest_node->cost)
-			cheapest_node = slot;
-		slot = slot->next;
-	}
-	cheapest_node->cheapest = true;
-}
-
-void	update_nodes(t_bilist *a, t_bilist *b, char slot)
-{
-	update_indexs(a, b);
-	if (slot == 'b')
-		update_targets(b, a, 0);
-	else
-	{
-		update_targets(a, b, 1);
-		update_cost(a, b);
-		update_cheapest(a);
-	}
+	cheapest->cheapest = true;
 }

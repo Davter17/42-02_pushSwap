@@ -49,7 +49,6 @@ int			slot_len(t_bilist *slot);
 t_bilist	*slot_first(t_bilist *slot);
 t_bilist	*slot_last(t_bilist *slot);
 t_bilist	*slot_cheapest(t_bilist *slot);
-//void		slot_print(t_bilist *slot);
 
 t_bilist	*slot_min(t_bilist *slot);
 t_bilist	*slot_max(t_bilist *slot);

@@ -12,45 +12,47 @@
 
 #include "push_swap.h"
 
-int	main(int argc, char **argv)
+static void	free_split(char **split_argv)
 {
-	t_bilist		*slot_a;
-	t_bilist		*slot_b;
-	char			**split_argv;
-	int				i;
+	int	i;
 
-	slot_b = NULL;
-	split_argv = NULL;
-	if (argc == 1)
-		return (0);
+	i = 0;
+	while (split_argv[i])
+		free(split_argv[i++]);
+	free(split_argv);
+}
+
+static char	**parse_args(int argc, char **argv, char ***split_ref)
+{
+	*split_ref = NULL;
 	if (argc == 2)
 	{
-		split_argv = ft_split(argv[1], ' ');
-		argv = split_argv;
+		*split_ref = ft_split(argv[1], ' ');
+		return (*split_ref);
 	}
-	else
-		argv = argv + 1;
-	if (check_errors(argv))
+	return (argv + 1);
+}
+
+int	main(int argc, char **argv)
+{
+	t_bilist	*slot_a;
+	t_bilist	*slot_b;
+	char		**split_argv;
+	char		**args;
+
+	slot_b = NULL;
+	args = parse_args(argc, argv, &split_argv);
+	if (check_errors(args))
 	{
 		if (split_argv)
-		{
-			i = 0;
-			while (split_argv[i])
-				free(split_argv[i++]);
-			free(split_argv);
-		}
+			free_split(split_argv);
 		exit(1);
 	}
-	generate_slot(&slot_a, argv);
+	generate_slot(&slot_a, args);
 	if (!slot_sorted(slot_a))
 		slot_a = turk_algorithm(&slot_a, &slot_b);
 	slot_free(&slot_a);
 	if (split_argv)
-	{
-		i = 0;
-		while (split_argv[i])
-			free(split_argv[i++]);
-		free(split_argv);
-	}
+		free_split(split_argv);
 	return (0);
 }
