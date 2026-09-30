@@ -51,12 +51,11 @@ static void	fill_b(t_bilist **slot_a, t_bilist **slot_b)
 		while (*slot_a != cheapest && *slot_b != cheapest->target)
 			rr(slot_a, slot_b);
 	}
-	else if (!(cheapest->ra) && !(cheapest->target->ra))
+	else if (!cheapest->ra && !cheapest->target->ra)
 	{
-		while (*slot_b != cheapest->target && *slot_a != cheapest)
+		while (*slot_a != cheapest && *slot_b != cheapest->target)
 			rrr(slot_a, slot_b);
 	}
-	update_indexs(*slot_a, *slot_b);
 	slot_to_top(slot_a, cheapest, 'a');
 	slot_to_top(slot_b, cheapest->target, 'b');
 	pb(slot_a, slot_b);

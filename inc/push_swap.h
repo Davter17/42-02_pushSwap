@@ -15,8 +15,8 @@
 
 # include <stdbool.h>
 # include <limits.h>
-# include "libft/libft.h"
-# include "libft/ft_printf.h"
+# include "libft.h"
+# include "ft_printf.h"
 
 typedef struct s_bilist
 {

@@ -1,53 +1,67 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: event <marvin@42.fr>                       +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/04/05 20:39:17 by event             #+#    #+#              #
-#    Updated: 2025/04/05 20:39:21 by event            ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = push_swap
 
-SRCS = alg_push.c alg_reverse_rotate.c alg_rotate.c alg_swap.c check_errors.c \
-       generate_slot.c main.c slot_utils_advance.c slot_utils_basic.c \
-	   turk_algorithm.c update_nodes.c
-OBJS = $(SRCS:.c=.o)
+SRCS_DIR = src
+OBJ_DIR = .obj
+INC_DIR = inc
 
-CFLAGS = -Wall -Werror -Wextra
+LIBRARYC_URL = https://github.com/Davter17/MyLibrary.git
+LIBRARYC_DIR = .deps/libraryC
+LIBRARYC_INC = $(LIBRARYC_DIR)/inc
+LIBRARYC_LIB = $(LIBRARYC_DIR)/libraryC.a
+
+SRCS = $(SRCS_DIR)/main.c \
+       $(SRCS_DIR)/alg_push.c \
+       $(SRCS_DIR)/alg_reverse_rotate.c \
+       $(SRCS_DIR)/alg_rotate.c \
+       $(SRCS_DIR)/alg_swap.c \
+       $(SRCS_DIR)/check_errors.c \
+       $(SRCS_DIR)/generate_slot.c \
+       $(SRCS_DIR)/slot_utils_advance.c \
+       $(SRCS_DIR)/slot_utils_basic.c \
+       $(SRCS_DIR)/turk_algorithm.c \
+       $(SRCS_DIR)/update_nodes.c
+
+OBJS = $(patsubst $(SRCS_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
+
 CC = cc
+CFLAGS = -Wall -Wextra -Werror -I$(INC_DIR) -I$(LIBRARYC_INC)
+AR = ar rcs
 
-LIBFT_DIR = libft
-LIBFT = $(LIBFT_DIR)/libft.a
-INCLUDES = -Ilibft
+all: $(LIBRARYC_LIB) $(NAME)
 
-.PHONY: all clean fclean re libft_clean libft_fclean
+$(OBJ_DIR)/%.o: $(SRCS_DIR)/%.c | $(OBJ_DIR)
+	@mkdir -p $(@D)
+	@$(CC) $(CFLAGS) -c $< -o $@
 
-all: $(LIBFT) $(NAME)
+$(OBJ_DIR):
+	@printf "  \033[33m⚙\033[0m  Compiling %d files...\n" $(words $(OBJS))
+	@mkdir -p $(OBJ_DIR)
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT) -o $(NAME)
-	chmod +x $(NAME)
+$(LIBRARYC_LIB):
+	@if [ ! -d "$(LIBRARYC_DIR)" ]; then \
+		printf "  \033[33m⚙\033[0m  Cloning libraryC...\n"; \
+		git clone $(LIBRARYC_URL) $(LIBRARYC_DIR) > /dev/null 2>&1; \
+	fi
+	@$(MAKE) --no-print-directory -C $(LIBRARYC_DIR)
 
-$(LIBFT):
-	$(MAKE) -C $(LIBFT_DIR)
+$(NAME): $(OBJS) $(LIBRARYC_LIB)
+	@printf "  \033[32m✓\033[0m Compiled %d files → $(NAME)\n" $(words $(OBJS))
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBRARYC_LIB) -o $(NAME)
 
-clean: libft_clean
-	rm -f $(OBJS)
+clean:
+	@printf "  \033[31m✗\033[0m  Removing object files...\n"
+	@rm -rf $(OBJ_DIR)
+	@if [ -d "$(LIBRARYC_DIR)" ]; then \
+		$(MAKE) --no-print-directory clean -C $(LIBRARYC_DIR); \
+	fi
 
-fclean: clean libft_fclean
-	rm -f $(NAME)
+fclean: clean
+	@printf "  \033[31m✗\033[0m  Removing $(NAME)...\n"
+	@rm -f $(NAME)
+	@if [ -d "$(LIBRARYC_DIR)" ]; then \
+		$(MAKE) --no-print-directory fclean -C $(LIBRARYC_DIR); \
+	fi
 
 re: fclean all
 
-libft_clean:
-	$(MAKE) -C $(LIBFT_DIR) clean
-
-libft_fclean:
-	$(MAKE) -C $(LIBFT_DIR) fclean
-
-%.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+.PHONY: all clean fclean re

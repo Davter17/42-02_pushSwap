@@ -1,0 +1,12 @@
+{
+  "name": "push-swap-tester",
+  "version": "1.0.0",
+  "description": "Visual tester for push_swap",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

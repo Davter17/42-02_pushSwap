@@ -56,21 +56,42 @@ void	slot_free(t_bilist **slot)
 	*slot = NULL;
 }
 
+static int	get_position(t_bilist *slot, t_bilist *node)
+{
+	int	pos;
+
+	pos = 0;
+	while (slot && slot != node)
+	{
+		slot = slot->next;
+		pos++;
+	}
+	return (pos);
+}
+
 void	slot_to_top(t_bilist **slot, t_bilist *node_to_top, char slot_name)
 {
-	while ((*slot)->value != node_to_top->value)
+	int	pos;
+	int	len;
+
+	len = slot_len(*slot);
+	pos = get_position(*slot, node_to_top);
+	if (pos <= len / 2)
 	{
-		if (slot_name == 'a')
+		while (*slot != node_to_top)
 		{
-			if (node_to_top->ra)
+			if (slot_name == 'a')
 				ra(slot);
 			else
-				rra(slot);
-		}
-		else
-		{
-			if (node_to_top->ra)
 				rb(slot);
+		}
+	}
+	else
+	{
+		while (*slot != node_to_top)
+		{
+			if (slot_name == 'a')
+				rra(slot);
 			else
 				rrb(slot);
 		}

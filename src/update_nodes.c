@@ -63,18 +63,23 @@ static void	update_cost(t_bilist *slot_a, t_bilist *slot_b)
 {
 	int	len_a;
 	int	len_b;
+	int	cost_a;
+	int	cost_b;
 
 	len_a = slot_len(slot_a);
 	len_b = slot_len(slot_b);
 	while (slot_a)
 	{
-		slot_a->cost = slot_a->index;
+		cost_a = slot_a->index;
 		if (!(slot_a->ra))
-			slot_a->cost = len_a - (slot_a->index);
-		if (slot_a->target->ra)
-			slot_a->cost += slot_a->target->index;
+			cost_a = len_a - slot_a->index;
+		cost_b = slot_a->target->index;
+		if (!(slot_a->target->ra))
+			cost_b = len_b - slot_a->target->index;
+		if (slot_a->ra == slot_a->target->ra)
+			slot_a->cost = (cost_a > cost_b) ? cost_a : cost_b;
 		else
-			slot_a->cost += len_b - (slot_a->target->index);
+			slot_a->cost = cost_a + cost_b;
 		slot_a = slot_a->next;
 	}
 }
@@ -82,7 +87,14 @@ static void	update_cost(t_bilist *slot_a, t_bilist *slot_b)
 static void	update_cheapest(t_bilist *slot)
 {
 	t_bilist	*cheapest_node;
+	t_bilist	*temp;
 
+	temp = slot;
+	while (temp)
+	{
+		temp->cheapest = false;
+		temp = temp->next;
+	}
 	cheapest_node = slot;
 	while (slot)
 	{

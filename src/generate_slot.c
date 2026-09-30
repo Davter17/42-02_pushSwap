@@ -32,7 +32,7 @@ void	generate_slot(t_bilist **slot_ini, char **argv)
 	t_bilist	*next_slot;
 
 	*slot_ini = bilst_new(NULL, ft_atoi(argv[0]));
-	if (!slot_ini)
+	if (!*slot_ini)
 	{
 		ft_printf("Error\nMemory allocation failed.\n");
 		exit(1);
